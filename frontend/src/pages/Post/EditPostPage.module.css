@@ -5,17 +5,17 @@
    flex-direction: row;
    align-items: flex-start;
    justify-content: space-between;
-   gap: 20px;
+   gap: 10px;
  }
   
  .leftSection {
-   flex: 4; /* Increased from 3 to give more space */
+   flex: 4;
    display: flex;
    flex-direction: column;
  }
  
  .inputField {
-   width: 100%; /* Input fields will use the full width of the left section */
+   width: 170%; /* Input fields will use the full width of the left section */
  }
   
  .rightSection {

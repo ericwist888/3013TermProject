@@ -2,11 +2,11 @@
    display: flex;
    justify-content: space-between;
    align-items: flex-start;
-   padding: 20px;
+   padding: 5px;
  }
  
  .textSection {
-   flex: 1; /* Adjust based on your layout preference */
+   flex: 2; /* Adjust based on your layout preference */
    margin-right: 5px;
  }
  
