@@ -1,5 +1,11 @@
 import { Loader } from '@mantine/core';
 
 export function LoadSpinner() {
-  return <Loader color="orange" size="lg" />;
+   return (
+      <>
+         <p>loading . . . </p>
+         <Loader color="orange" size="lg" />
+      </>
+      
+   );
 }

@@ -2,26 +2,35 @@ import DOMAIN from "../../services/endpoint";
 import axios from "axios";
 import { ArticleCardImage } from "../../components/misc/ArticleCardImage";
 import { SimpleGrid, Container } from "@mantine/core";
-import { useLoaderData } from "react-router-dom";
+//import { useLoaderData } from "react-router-dom";
 import { LoadSpinner } from "./loadSpinner";
+import { defer } from 'react-router-dom'
+import { useEffect, useState } from "react";
 
 export const postsLoader = async () => {
-  const res = await axios.get(`${DOMAIN}/api/posts`);
-  //await new Promise(resolve => setTimeout(resolve, 3000)); // delay test
-  return res.data;
+  return defer({
+    posts: axios.get(`${DOMAIN}/api/posts`).then(response => response.data)
+  });
 };
 
 export const PostPage = () => {
-  //const [posts, setPosts] = useState(null);
-  const posts= useLoaderData();
-  console.log('Posts initially:', posts);
+  const [posts, setPosts] = useState(null);
 
-  if (!posts || posts.length === 0) {
-    console.log('Loading, showing spinner...');
-    return <LoadSpinner/>; // Show a spinner while the data is loading
+  useEffect(() => {
+    axios.get(`${DOMAIN}/api/posts`).then(response => {
+      console.log('Direct API call data:', response.data);
+      setPosts(response.data);
+    });
+  }, []);
+
+  if (!posts) {
+    return (
+      <Container>
+        <LoadSpinner />
+      </Container>
+    );
   }
 
-  // Render the posts once the data is available
   return (
     <Container>
       <SimpleGrid cols={3}>
@@ -32,4 +41,3 @@ export const PostPage = () => {
     </Container>
   );
 };
-
