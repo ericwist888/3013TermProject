@@ -7,7 +7,7 @@ import { LoadSpinner } from "./loadSpinner";
 
 export const postsLoader = async () => {
   const res = await axios.get(`${DOMAIN}/api/posts`);
-  //await new Promise(resolve => setTimeout(resolve, 3000)); // Add a 3-second delay
+  //await new Promise(resolve => setTimeout(resolve, 3000)); // delay test
   return res.data;
 };
 
