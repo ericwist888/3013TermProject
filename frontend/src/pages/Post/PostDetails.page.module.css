@@ -1,0 +1,26 @@
+.container {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   padding: 20px;
+ }
+ 
+ .textSection {
+   flex: 1; /* Adjust based on your layout preference */
+   margin-right: 5px;
+ }
+ 
+ .imageSection {
+   flex-basis: 40%; /* Adjust size of the image section */
+   max-width: 40%; /* You can adjust this for a responsive design */
+   display: flex;
+   justify-content: center; /* Center image horizontally */
+   align-items: center; /* Center image vertically */
+ }
+ 
+ .image {
+   width: 100%; /* Make the image expand to the width of the image section */
+   height: auto; /* Maintain aspect ratio */
+   border-radius: 8px; /* Optional: for rounded corners */
+ }
+ 
