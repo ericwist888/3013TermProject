@@ -4,7 +4,7 @@ import { Container, Title, Text, Image, Button, Group } from '@mantine/core';
 import styles from './PostDetails.page.module.css';
 import axios from 'axios';
 import DOMAIN from '../../services/endpoint';
-import useBoundStore from '../../store/Store'; // Import your state management hook.
+import useBoundStore from '../../store/Store';
 
 export const postDetailsLoader = async ({ params }) => {
   const response = await axios.get(`${DOMAIN}/api/posts/${params.id}`);
@@ -14,10 +14,12 @@ export const postDetailsLoader = async ({ params }) => {
 function PostDetailsPage() {
   const post = useLoaderData();
   const navigate = useNavigate();
+  const user = useBoundStore(state => state.user);
   const [author, setAuthor] = useState('');
-  const user = useBoundStore((state) => state.user); // Assuming this retrieves the current user.
 
   useEffect(() => {
+    if (!post || !post.userId) return;
+
     const fetchAuthor = async () => {
       try {
         const response = await axios.get(`${DOMAIN}/api/users/${post.userId}`);
@@ -27,18 +29,11 @@ function PostDetailsPage() {
       }
     };
 
-    if (post.userId) {
-      fetchAuthor();
-    }
-  }, [post.userId]);
+    fetchAuthor();
+  }, [post, post.userId]); // React to changes in 'post' object
 
-  const handleEdit = () => {
-    navigate(`/edit-post/${post.id}`);
-  };
-
-  const handleBack = () => {
-    navigate('/posts');
-  };
+  const handleEdit = () => navigate(`/edit-post/${post.id}`);
+  const handleBack = () => navigate('/posts');
 
   if (!post) return <div>Loading...</div>;
 
@@ -50,7 +45,6 @@ function PostDetailsPage() {
         <Text>{post.category}</Text>
         <Text>{post.content}</Text>
 
-        {/* Show Edit button only if the logged-in user is the author */}
         {user && user.id === post.userId && (
           <Button onClick={handleEdit} mt="md">Edit</Button>
         )}
